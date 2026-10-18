@@ -14,18 +14,47 @@ Ce projet contient deux problemes d'optimisation :
 L'algorithme genetique n'est pas inclus, car le message de l'enseignante
 demande uniquement la recherche taboue et le recuit simule pour l'exercice 3.
 
-## Organisation des fichiers
+## Structure du projet
 
 ```text
 td-algo/
 |
-|-- exercice2_transport.py       Probleme de transport
-|-- exercice3_tabou.py           TSP avec recherche taboue
-|-- exercice3_recuit_simule.py   TSP avec recuit simule
-|-- visualisation.py             Generation des graphiques
+|-- exercice2_transport.py       Donnees et recherche taboue du transport
+|-- exercice3_tabou.py           Donnees et recherche taboue du TSP
+|-- exercice3_recuit_simule.py   Recuit simule du TSP
+|-- visualisation.py             Generation des trois graphiques
 |-- requirements.txt             Dependances Python
-|-- README.md                    Documentation du projet
-|-- assets/                      Images utilisees dans le README
+|-- README.md                    Documentation et resultats
+|-- assets/                      Images generees pour le README
+```
+
+### Organisation du code
+
+Les fichiers sont separes par probleme et par methode :
+
+- `exercice2_transport.py` contient la matrice des couts, les stocks, les
+  demandes, la verification des solutions et les voisins du probleme de
+  transport. La fonction `recherche_taboue` genere une solution initiale,
+  explore les voisins et conserve la meilleure solution.
+- `exercice3_tabou.py` contient la matrice des distances du TSP, le calcul du
+  cout d'une tournee, la verification des liaisons et la recherche taboue.
+  Une solution est representee par un tuple de villes, avec la ville 1 comme
+  point de depart.
+- `exercice3_recuit_simule.py` reutilise le calcul du cout et la validation du
+  fichier precedent. Il genere des permutations voisines, applique la regle
+  de Metropolis et diminue progressivement la temperature.
+- `visualisation.py` importe les fonctions des trois exercices, execute les
+  algorithmes avec les parametres fixes, puis enregistre les graphiques dans
+  `assets/`.
+
+Le chemin d'execution des visualisations est donc :
+
+```text
+visualisation.py
+    -> exercice2_transport.py
+    -> exercice3_tabou.py
+    -> exercice3_recuit_simule.py
+    -> assets/*.png
 ```
 
 ## Prerequis
@@ -57,45 +86,16 @@ Si la commande `python` n'est pas reconnue, utiliser le lanceur Windows :
 py -m pip install -r requirements.txt
 ```
 
-## Execution des programmes
+## Execution et visualisations
 
-### Exercice 2 : transport
-
-```powershell
-python exercice2_transport.py
-```
-
-Le programme affiche la matrice des quantites envoyees et le cout total.
-Le resultat attendu est un cout de 52.
-
-### Exercice 3 : recherche taboue
-
-```powershell
-python exercice3_tabou.py
-```
-
-Le programme affiche la tournee initiale, son cout, puis la meilleure tournee
-trouvee par la recherche taboue. Le resultat attendu est un cout de 98.
-
-### Exercice 3 : recuit simule
-
-```powershell
-python exercice3_recuit_simule.py
-```
-
-Le programme utilise 5 paliers de temperature et 15 essais par palier. Il
-affiche le cout de la tournee apres chaque essai. Le meilleur cout attendu est
-98.
-
-## Generation des visualisations
-
-Pour generer les trois graphiques PNG :
+Apres l'installation, une seule commande suffit pour executer les trois
+algorithmes et regenerer les trois graphiques PNG :
 
 ```powershell
 python visualisation.py
 ```
 
-Les images sont enregistrees dans le dossier `assets/` :
+Les images sont enregistrees dans `assets/` :
 
 - `assets/exercice2_transport.png` : quantites transportees et contribution
   de chaque liaison au cout total ;
@@ -104,8 +104,10 @@ Les images sont enregistrees dans le dossier `assets/` :
 - `assets/exercice3_recuit.png` : tournee obtenue et evolution du cout pendant
   le recuit simule.
 
-Les images peuvent etre regenerees a tout moment apres une modification du
-code. Elles sont integrees directement dans ce README.
+Cette commande peut etre relancee apres chaque modification du code. Les
+fichiers Python peuvent aussi etre lances individuellement depuis PowerShell
+si l'on veut observer la sortie detaillee d'un seul algorithme, mais ce n'est
+pas necessaire pour generer le rendu.
 
 ## Donnees de l'exercice 2
 
@@ -224,13 +226,10 @@ meme resultats lors de plusieurs executions. Pour tester d'autres executions,
 il est possible de modifier le parametre `graine` dans les fonctions
 correspondantes.
 
-## Resume des commandes
+## Commande complete
 
 ```powershell
 cd "C:\Users\chahi\OneDrive\Documents\tp\tp algo"
 python -m pip install -r requirements.txt
-python exercice2_transport.py
-python exercice3_tabou.py
-python exercice3_recuit_simule.py
 python visualisation.py
 ```
